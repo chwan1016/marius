@@ -46,15 +46,9 @@ class CMakeBuild(build_ext):
 
         cmake_args += ["-DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE"]
         cmake_args += ["-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE"]
-
-        try:
-            import torch
-
-            if torch.cuda.is_available():
-                cmake_args += ["-DUSE_CUDA=TRUE"]
-                cmake_args += ["-DUSE_OMP=TRUE"]
-        except ImportError:
-            raise ImportError("Pytorch not found. Please install pytorch first.")
+        
+        cmake_args += ["-DUSE_CUDA=TRUE"]
+        cmake_args += ["-DUSE_OMP=TRUE"]
 
         if sys.platform == "darwin":
             cmake_args.append("-DCMAKE_INSTALL_RPATH=@loader_path")
